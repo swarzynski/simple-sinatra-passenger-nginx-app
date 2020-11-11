@@ -65,4 +65,24 @@ https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/ngin
 https://www.phusionpassenger.com/library/walkthroughs/start/ruby.html#preparing-the-example-application
 https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/nginx/oss/bionic/deploy_app.html
 
+https://www.phusionpassenger.com/docs/advanced_guides/troubleshooting/nginx/
 
+
+```
+cd /var/www/simpleapp
+
+sudo -u simpleapp -H git clone --branch=end_result https://github.com/phusion/passenger-ruby-rails-demo.git code
+
+sudo -u simpleapp -H bash -l
+
+cd /var/www/simpleapp/code
+
+sudo apt install libgmp3-dev #needed by json gem
+sudo apt -y install patch ruby-dev zlib1g-dev liblzma-dev libsqlite3-dev # needed by nokogiri gem
+
+
+bundle install --deployment --without development test
+
+namei -l /var/www/simpleapp/code/config.ru
+chcon -Rt httpd_sys_content_t /var/www/simpleapp/code
+```
